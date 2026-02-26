@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maggie Song</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #2C1F14;
+    --warm-white: #FAF7F2;
+    --terracotta: #C4654A;
+    --terracotta-dark: #A8503A;
+    --clay: #9A7B5A;
+    --earth: #8B6B4A;
+    --deep-brown: #2C1F14;
+    --charcoal: #FAF7F2;
+    --sage: #7A8B6F;
+    --sand: #E8D5BC;
+    --muted-gold: #BFA265;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--clay) var(--charcoal);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection {
+    background: var(--terracotta);
+    color: #FAF7F2;
+  }
+
+  /* ═══ NOISE TEXTURE OVERLAY ═══ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    mix-blend-mode: difference;
+  }
+
+  nav.scrolled {
+    padding: 1rem 3rem;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--terracotta);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(196,101,74,0.15), transparent),
+      radial-gradient(ellipse 60% 50% at 20% 70%, rgba(212,149,106,0.1), transparent),
+      radial-gradient(ellipse 40% 40% at 90% 80%, rgba(122,139,111,0.08), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-greeting {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-name .accent {
+    color: var(--terracotta);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    max-width: 550px;
+    color: rgba(44, 31, 20, 0.6);
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: var(--terracotta);
+    color: #FAF7F2;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: var(--terracotta-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid rgba(44, 31, 20, 0.2);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+  }
+
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1.5px;
+    background: var(--clay);
+    animation: pulse 2s infinite;
+  }
+
+  .scroll-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  /* ═══ SECTIONS GENERAL ═══ */
+  section {
+    padding: 8rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 30px;
+    height: 1.5px;
+    background: var(--terracotta);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  /* ═══ ABOUT ═══ */
+  #about {
+    position: relative;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(44, 31, 20, 0.65);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--deep-brown);
+    font-weight: 500;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .stat-card {
+    padding: 2rem;
+    background: rgba(44, 31, 20, 0.03);
+    border: 1px solid rgba(44, 31, 20, 0.05);
+    transition: all 0.4s;
+  }
+
+  .stat-card:hover {
+    background: rgba(44, 31, 20, 0.05);
+    border-color: rgba(196, 101, 74, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--terracotta);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(44, 31, 20, 0.45);
+    margin-top: 0.75rem;
+  }
+
+  .profile-photo-wrap {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(196, 101, 74, 0.4);
+    box-shadow: 0 0 0 6px rgba(196, 101, 74, 0.12), 0 8px 32px rgba(0,0,0,0.1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+    display: block;
+  }
+
+  .profile-photo:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 8px rgba(196, 101, 74, 0.2), 0 12px 40px rgba(0,0,0,0.15);
+  }
+
+  .about-languages {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(44, 31, 20, 0.03);
+    border: 1px solid rgba(44, 31, 20, 0.05);
+  }
+
+  .lang-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 1.5rem;
+  }
+
+  .lang-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(44, 31, 20, 0.15);
+    color: var(--deep-brown);
+    border-radius: 2px;
+  }
+
+  /* ═══ DIVIDER ═══ */
+  .divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    height: 1px;
+    position: relative;
+  }
+
+  .divider::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(44, 31, 20, 0.06), transparent);
+  }
+
+  /* ═══ WORK / PROJECTS ═══ */
+  .project-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+    align-items: center;
+  }
+
+  .project-card:nth-child(even) {
+    direction: rtl;
+  }
+
+  .project-card:nth-child(even) > * {
+    direction: ltr;
+  }
+
+  .project-visual {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(196,101,74,0.15), rgba(212,149,106,0.1));
+    border: 1px solid rgba(44, 31, 20, 0.05);
+  }
+
+  .project-visual-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-visual:hover .project-visual-inner {
+    transform: scale(1.03);
+  }
+
+  .project-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-visual-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  .project-info {}
+
+  .project-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+  }
+
+  .project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-desc {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(44, 31, 20, 0.55);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .project-tech {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .tech-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(44, 31, 20, 0.1);
+    color: rgba(44, 31, 20, 0.45);
+  }
+
+  /* ═══ INTERESTS ═══ */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .interest-group-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  .interest-list {
+    list-style: none;
+  }
+
+  .interest-item {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(44, 31, 20, 0.05);
+    color: rgba(44, 31, 20, 0.6);
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s;
+  }
+
+  .interest-item:hover {
+    color: var(--deep-brown);
+    padding-left: 0.5rem;
+  }
+
+  .interest-item::before {
+    content: '→';
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--terracotta);
+    transition: transform 0.3s;
+  }
+
+  .interest-item:hover::before {
+    transform: translateX(4px);
+  }
+
+  /* ═══ CONTACT ═══ */
+  #contact {
+    text-align: center;
+    padding-bottom: 6rem;
+  }
+
+  #contact .section-label {
+    justify-content: center;
+  }
+
+  #contact .section-label::before { display: none; }
+  #contact .section-label::after {
+    content: '';
+    width: 30px;
+    height: 1.5px;
+    background: var(--terracotta);
+  }
+
+  .contact-email {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--deep-brown);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s;
+  }
+
+  .contact-email:hover {
+    color: var(--terracotta);
+  }
+
+  .contact-email::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--terracotta);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-email:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .contact-details {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(44, 31, 20, 0.45);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-item:hover { color: var(--terracotta); }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    padding: 2rem 3rem;
+    text-align: center;
+    border-top: 1px solid rgba(44, 31, 20, 0.05);
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(44, 31, 20, 0.25);
+  }
+
+  /* ═══ SCROLL REVEAL ═══ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ═══ ANIMATIONS ═══ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ═══ MARQUEE ═══ */
+  .marquee-section {
+    padding: 3rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(44, 31, 20, 0.05);
+    border-bottom: 1px solid rgba(44, 31, 20, 0.05);
+  }
+
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-track:hover { animation-play-state: paused; }
+
+  .marquee-item {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    white-space: nowrap;
+    padding: 0 2rem;
+    color: rgba(44, 31, 20, 0.1);
+    font-style: italic;
+  }
+
+  .marquee-item .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    margin: 0 2rem;
+    vertical-align: middle;
+    opacity: 0.5;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .project-card { grid-template-columns: 1fr; gap: 2rem; }
+    .project-card:nth-child(even) { direction: ltr; }
+    .interests-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-scroll-indicator { left: 1.5rem; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .about-stats { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas a { text-align: center; }
+    .contact-details { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">MS.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-greeting">Hello · 你好 · ¡Hola!</p>
+    <h1 class="hero-name">Maggie<br><span class="accent">Song</span></h1>
+    <p class="hero-tagline">Computer Science & Applied Mathematics at Vanderbilt University — exploring the intersections of technology, finance, and business.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span class="scroll-line"></span>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Computer Science <span class="dot"></span> Applied Mathematics <span class="dot"></span> Finance <span class="dot"></span> Consulting <span class="dot"></span> VR Development <span class="dot"></span> Sales & Marketing <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
+    <span class="marquee-item">Computer Science <span class="dot"></span> Applied Mathematics <span class="dot"></span> Finance <span class="dot"></span> Consulting <span class="dot"></span> VR Development <span class="dot"></span> Sales & Marketing <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="reveal">
+    <span class="section-label">About Me</span>
+    <h2 class="section-title">Building at the<br>intersection of <span style="color:var(--terracotta);font-style:italic;">tech & business</span></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>Since first learning <strong>robotics in primary school</strong> and later competing in <strong>computing Olympiads</strong> in high school, I've developed a long-lasting passion for technology. At Vanderbilt University, where I study <strong>Computer Science and Applied Mathematics</strong>, that passion has only deepened.</p>
+      <p>In college, I was fortunate to become involved in <strong>finance, consulting, and management</strong>, which I found equally compelling. As I prepare to graduate in <strong>May 2026</strong>, I'm eager to explore the intersections between these fields — building things that matter at the crossroads of technology and business.</p>
+    </div>
+    <div>
+      <div class="profile-photo-wrap reveal">
+        <img src="my-pic.jpg" alt="Maggie Song" class="profile-photo">
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">CS</div>
+          <div class="stat-label">+ Applied Math</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">'26</div>
+          <div class="stat-label">Vanderbilt Grad</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2x</div>
+          <div class="stat-label">Tech & Business</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Curiosity</div>
+        </div>
+      </div>
+      <div class="about-languages reveal">
+        <div class="lang-title">Languages I speak</div>
+        <div class="lang-tags">
+          <span class="lang-tag">English</span>
+          <span class="lang-tag">中文</span>
+          <span class="lang-tag">Español</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ WORK ═══ -->
+<section id="work">
+  <div class="reveal">
+    <span class="section-label">Recent Work</span>
+    <h2 class="section-title">Dual explorations in<br><span style="color:var(--terracotta);font-style:italic;">tech & business</span></h2>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-visual">
+      <div class="project-visual-inner" style="background: linear-gradient(135deg, rgba(196,101,74,0.08), rgba(122,139,111,0.12));">
+        <div class="project-icon">🏹</div>
+        <div class="project-visual-label">Award-Winning Project</div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div class="project-tag">Technology · VR · Game Dev</div>
+      <h3 class="project-name">VR Archery Combat Game</h3>
+      <p class="project-desc">The top project at the 2025 Vanderbilt CS Immersion Showcase out of 23 teams. Collaborated with a team of five from diverse backgrounds to build a VR archery combat game, developing skills in engineering, design communication, and full project lifecycle management.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Unity</span>
+        <span class="tech-pill">Meta Quest 3</span>
+        <span class="tech-pill">C#</span>
+        <span class="tech-pill">VR/XR</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-visual">
+      <div class="project-visual-inner" style="background: linear-gradient(135deg, rgba(212,149,106,0.1), rgba(191,162,101,0.08));">
+        <div class="project-icon">🍵</div>
+        <div class="project-visual-label">Sales & Marketing</div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div class="project-tag">Business · Marketing · Strategy</div>
+      <h3 class="project-name">MoonTea Sales & Marketing</h3>
+      <p class="project-desc">Leading sales and marketing improvements for a tea shop operating in Cupertino and Sunnyvale, CA. Positioned as one of the best tea shops in the Bay Area, I'm helping them take the next step by better understanding their customers, enhancing product campaigns, and addressing operational pain points.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Customer Analytics</span>
+        <span class="tech-pill">Campaign Strategy</span>
+        <span class="tech-pill">Operations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ INTERESTS ═══ -->
+<section id="interests">
+  <div class="reveal">
+    <span class="section-label">Beyond Work</span>
+    <h2 class="section-title">Things I care<br><span style="color:var(--terracotta);font-style:italic;">deeply about</span></h2>
+  </div>
+
+  <div class="interests-grid reveal">
+    <div>
+      <div class="interest-group-title">Professionally</div>
+      <ul class="interest-list">
+        <li class="interest-item">Circular economy & waste reduction</li>
+        <li class="interest-item">Sustainable supply chains & technology</li>
+        <li class="interest-item">Community engagement & giving back</li>
+        <li class="interest-item">Fair labor practices</li>
+        <li class="interest-item">Technology for social good</li>
+        <li class="interest-item">Building tools that empower</li>
+      </ul>
+    </div>
+    <div>
+      <div class="interest-group-title">Personally</div>
+      <ul class="interest-list">
+        <li class="interest-item">Freelance photography</li>
+        <li class="interest-item">Roadtripping</li>
+        <li class="interest-item">Writing</li>
+        <li class="interest-item">Wakesurfing</li>
+        <li class="interest-item">Skiing</li>
+        <li class="interest-item">Hiking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="reveal">
+    <span class="section-label">Let's Connect</span>
+    <h2 class="section-title">Say hello.</h2>
+    <a href="mailto:mo.song@vanderbilt.edu" class="contact-email">mo.song@vanderbilt.edu</a>
+    <div class="contact-details">
+      <a href="tel:804-349-6846" class="contact-item">804 · 349 · 6846</a>
+      <span class="contact-item">·</span>
+      <a href="mailto:mo.song@vanderbilt.edu" class="contact-item">Email</a>
+      <span class="contact-item">·</span>
+      <a href="https://www.linkedin.com/in/mo-maggie-song/" target="_blank" class="contact-item">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>© 2026 Maggie Song — Designed with intention</p>
+</footer>
+
+<script>
+  // ═══ SCROLL REVEAL ═══
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ═══ NAV SCROLL ═══
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ═══ SMOOTH ANCHOR SCROLLING ═══
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
