@@ -518,6 +518,108 @@
     color: rgba(44, 31, 20, 0.45);
   }
 
+  /* ═══ EXPERIENCE ═══ */
+  .experience-timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+
+  .experience-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(180deg, var(--terracotta), rgba(196,101,74,0.15));
+  }
+
+  .exp-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    transform: translateX(-4.25px);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .exp-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  .exp-role {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-context {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(44, 31, 20, 0.4);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .exp-bullets li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(44, 31, 20, 0.6);
+    font-weight: 300;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--terracotta);
+    font-weight: 400;
+  }
+
+  .exp-skills {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
   /* ═══ INTERESTS ═══ */
   .interests-grid {
     display: grid;
@@ -748,7 +850,8 @@
   <a href="#" class="nav-logo">MS.</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
+    <li><a href="#work">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#interests">Interests</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -760,7 +863,7 @@
   <div class="hero-content">
     <p class="hero-greeting">Hello · 你好 · ¡Hola!</p>
     <h1 class="hero-name">Maggie<br><span class="accent">Song</span></h1>
-    <p class="hero-tagline">Computer Science & Applied Mathematics at Vanderbilt University — exploring the intersections of technology, finance, and business.</p>
+    <p class="hero-tagline">Computer Science & Applied Mathematics at Vanderbilt University, exploring the intersections of technology, finance, and business.</p>
     <div class="hero-ctas">
       <a href="#work" class="btn-primary">View My Work</a>
       <a href="#contact" class="btn-outline">Get In Touch</a>
@@ -775,8 +878,8 @@
 <!-- ═══ MARQUEE ═══ -->
 <div class="marquee-section">
   <div class="marquee-track">
-    <span class="marquee-item">Computer Science <span class="dot"></span> Applied Mathematics <span class="dot"></span> Finance <span class="dot"></span> Consulting <span class="dot"></span> VR Development <span class="dot"></span> Sales & Marketing <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
-    <span class="marquee-item">Computer Science <span class="dot"></span> Applied Mathematics <span class="dot"></span> Finance <span class="dot"></span> Consulting <span class="dot"></span> VR Development <span class="dot"></span> Sales & Marketing <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
+    <span class="marquee-item">Product Management <span class="dot"></span> Computer Science <span class="dot"></span> Applied Math <span class="dot"></span> User Research <span class="dot"></span> VR Development <span class="dot"></span> Strategy & Analytics <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
+    <span class="marquee-item">Product Management <span class="dot"></span> Computer Science <span class="dot"></span> Applied Math <span class="dot"></span> User Research <span class="dot"></span> VR Development <span class="dot"></span> Strategy & Analytics <span class="dot"></span> Photography <span class="dot"></span> Sustainability <span class="dot"></span></span>
   </div>
 </div>
 
@@ -788,8 +891,8 @@
   </div>
   <div class="about-grid">
     <div class="about-text reveal">
-      <p>Since first learning <strong>robotics in primary school</strong> and later competing in <strong>computing Olympiads</strong> in high school, I've developed a long-lasting passion for technology. At Vanderbilt University, where I study <strong>Computer Science and Applied Mathematics</strong>, that passion has only deepened.</p>
-      <p>In college, I was fortunate to become involved in <strong>finance, consulting, and management</strong>, which I found equally compelling. As I prepare to graduate in <strong>May 2026</strong>, I'm eager to explore the intersections between these fields — building things that matter at the crossroads of technology and business.</p>
+      <p>I fell in love with building things early: <strong>robotics in primary school</strong>, then a <strong>USACO Platinum</strong> finish in computing Olympiads. At Vanderbilt, where I study <strong>Computer Science and Applied Mathematics</strong> (3.98 GPA), that instinct grew into a drive to understand not just how products work, but <strong>why they matter to users</strong>.</p>
+      <p>Internships in <strong>investment banking, private equity, and consulting</strong> taught me to think in markets, customers, and trade-offs. The same muscles that power great product thinking. As I graduate in <strong>May 2026</strong>, I'm looking for <strong>product and tech roles</strong> where I can combine deep technical ability with business strategy to ship things that make a difference.</p>
     </div>
     <div>
       <div class="profile-photo-wrap reveal">
@@ -830,16 +933,13 @@
 <!-- ═══ WORK ═══ -->
 <section id="work">
   <div class="reveal">
-    <span class="section-label">Recent Work</span>
-    <h2 class="section-title">Dual explorations in<br><span style="color:var(--terracotta);font-style:italic;">tech & business</span></h2>
+    <span class="section-label">Projects</span>
+    <h2 class="section-title">Things I've <span style="color:var(--terracotta);font-style:italic;">shipped & shaped</span></h2>
   </div>
 
   <div class="project-card reveal">
     <div class="project-visual">
-      <div class="project-visual-inner" style="background: linear-gradient(135deg, rgba(196,101,74,0.08), rgba(122,139,111,0.12));">
-        <div class="project-icon">🏹</div>
-        <div class="project-visual-label">Award-Winning Project</div>
-      </div>
+      <img src="arrowgeddon.png" alt="Arrowgeddon VR Archery Game" style="width:100%;height:100%;object-fit:cover;display:block;">
     </div>
     <div class="project-info">
       <div class="project-tag">Technology · VR · Game Dev</div>
@@ -869,6 +969,87 @@
         <span class="tech-pill">Customer Analytics</span>
         <span class="tech-pill">Campaign Strategy</span>
         <span class="tech-pill">Operations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience">
+  <div class="reveal">
+    <span class="section-label">Experience</span>
+    <h2 class="section-title">Where I've <span style="color:var(--terracotta);font-style:italic;">built & learned</span></h2>
+  </div>
+
+  <div class="experience-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-company">UBS Investment Bank</span>
+        <span class="exp-date">Jun 2025 — Aug 2025</span>
+      </div>
+      <div class="exp-role">Summer Associate · Nashville, TN</div>
+      <ul class="exp-bullets">
+        <li>Mitigated risk for 10+ hedge funds totaling ~$5B AUM by coordinating onboarding and reviewing products and commissions</li>
+        <li>Cut onboarding cycles by 20% by authoring a 100-page SEC-ready SOP on onboarding and due diligence with global teams</li>
+      </ul>
+      <div class="exp-skills">
+        <span class="tech-pill">Risk Analysis</span>
+        <span class="tech-pill">Process Design</span>
+        <span class="tech-pill">Cross-functional Ops</span>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-company">Caprae Capital Partners</span>
+        <span class="exp-date">Apr 2024 — Jul 2024</span>
+      </div>
+      <div class="exp-role">Private Equity Intern · Glendale, CA</div>
+      <div class="exp-context">$100M+ AUM ETA-focused fund targeting tech-enabled services</div>
+      <ul class="exp-bullets">
+        <li>Evaluated 100+ M&A targets, triggering IOIs/LOIs on two high-conviction deals totaling over $5M</li>
+        <li>Produced four 30+ page industry whitepapers that helped attract over $55M in follow-on investments</li>
+        <li>Led four interns researching overhead bus systems in $4.5B data-center market</li>
+        <li>Revamped company website and brand identity to strengthen positioning and attract investors</li>
+      </ul>
+      <div class="exp-skills">
+        <span class="tech-pill">Market Research</span>
+        <span class="tech-pill">Due Diligence</span>
+        <span class="tech-pill">Industry Analysis</span>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-company">Pointe Advisory (acq. by Stout)</span>
+        <span class="exp-date">Jun 2024</span>
+      </div>
+      <div class="exp-role">Industrials Consulting Extern · Arlington, VA</div>
+      <ul class="exp-bullets">
+        <li>Analyzed competitive landscape and revenue for $60B agriculture client, presenting findings to C-suite with five consultants</li>
+      </ul>
+      <div class="exp-skills">
+        <span class="tech-pill">Strategy</span>
+        <span class="tech-pill">Competitive Analysis</span>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-company">Lakeside Consulting Group</span>
+        <span class="exp-date">Feb 2023 — May 2024</span>
+      </div>
+      <div class="exp-role">VP of Education · Vanderbilt University</div>
+      <ul class="exp-bullets">
+        <li>Spearheaded recruitment efforts that grew membership 3x, attracting 40+ new members</li>
+        <li>Led consulting engagements including an M&A database for an industry client and an HR transformation for a transit agency serving 1M+ annual riders</li>
+      </ul>
+      <div class="exp-skills">
+        <span class="tech-pill">Leadership</span>
+        <span class="tech-pill">Client Delivery</span>
+        <span class="tech-pill">Mentorship</span>
       </div>
     </div>
   </div>
@@ -929,7 +1110,7 @@
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <p>© 2026 Maggie Song — Designed with intention</p>
+  <p>© 2026 Maggie Song · Designed with intention</p>
 </footer>
 
 <script>
