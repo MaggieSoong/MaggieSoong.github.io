@@ -231,11 +231,20 @@ h5 {
   line-height: 24px;
 }
 
+.writing-item > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: baseline;
+}
+
 .writing-item time {
   display: block;
   color: #888;
   font-size: 18px;
   line-height: 23px;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .attention-intro {
@@ -291,6 +300,12 @@ h5 {
   line-height: 44px;
 }
 
+.section-symbol {
+  display: inline-block;
+  font-size: 0.58em;
+  vertical-align: 0.14em;
+}
+
 .education-list {
   width: 960px;
 }
@@ -333,7 +348,10 @@ h5 {
 }
 
 .experience-item time {
+  justify-self: end;
   padding-top: 2px;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .about-contact {
@@ -451,8 +469,14 @@ h5 {
     line-height: 22px;
   }
 
+  .writing-item > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
   .writing-item time {
     font-size: 15px;
+    text-align: right;
   }
 
   .attention-intro {
