@@ -19,7 +19,7 @@ html {
 
 body {
   margin: 0;
-  background: #fff;
+  background: #e8f4ea;
   color: var(--ink);
   font-family: "EB Garamond", Georgia, serif;
   font-size: 18px;
@@ -70,10 +70,10 @@ a {
   width: 75px;
   height: 50px;
   place-items: center;
-  font-size: 21px !important;
-  font-style: italic;
-  letter-spacing: -0.08em;
-  transform: rotate(-5deg);
+  font-family: "Allura", cursive;
+  font-size: 34px !important;
+  letter-spacing: -0.02em;
+  transform: rotate(-3deg);
 }
 
 h1,
@@ -97,7 +97,7 @@ h5 {
   display: grid;
   grid-template-columns: 440px 465px;
   gap: 55px;
-  padding-top: 115px;
+  padding-top: 70px;
 }
 
 .home-title {
@@ -128,7 +128,7 @@ h5 {
 
 .home-photo {
   width: 465px;
-  height: 163px;
+  height: 220px;
   border-radius: 15px;
   object-fit: cover;
   object-position: 50% 56%;
@@ -405,13 +405,13 @@ h5 {
 
   .nav-mark {
     width: 42px;
-    font-size: 18px !important;
+    font-size: 28px !important;
   }
 
   .home-hero {
     grid-template-columns: 1fr;
     gap: 32px;
-    padding-top: 65px;
+    padding-top: 40px;
   }
 
   .home-title {
@@ -420,7 +420,7 @@ h5 {
 
   .home-photo {
     width: 100%;
-    height: min(43vw, 210px);
+    height: min(58vw, 240px);
   }
 
   .home-title h1,
