@@ -286,12 +286,16 @@ h5 {
 .about-lede {
   margin: -7px 0 47px;
   color: var(--muted);
-  font-size: 36px;
-  line-height: 45px;
+  font-size: 30px;
+  line-height: 38px;
 }
 
 .about-section {
   margin-bottom: 91px;
+}
+
+.education-section {
+  margin-bottom: 48px;
 }
 
 .about-section > h2 {
@@ -331,8 +335,8 @@ h5 {
 
 .experience-item {
   display: grid;
-  grid-template-columns: 475px 1fr;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 30px;
   margin-bottom: 18px;
 }
 
@@ -345,6 +349,7 @@ h5 {
 
 .experience-item p {
   margin-bottom: 0;
+  white-space: nowrap;
 }
 
 .experience-item time {
@@ -430,10 +435,14 @@ h5 {
   }
 
   .tagline,
-  .attention-section h2,
-  .about-lede {
+  .attention-section h2 {
     font-size: 31px;
     line-height: 37px;
+  }
+
+  .about-lede {
+    font-size: 26px;
+    line-height: 32px;
   }
 
   .home-copy,
@@ -491,6 +500,10 @@ h5 {
     grid-template-columns: 1fr;
     gap: 0;
     margin-bottom: 28px;
+  }
+
+  .experience-item p {
+    white-space: normal;
   }
 
   .about-contact,
