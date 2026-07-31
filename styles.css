@@ -283,11 +283,32 @@ h5 {
   margin-bottom: 18px;
 }
 
-.about-lede {
-  margin: -7px 0 47px;
+.about-page-title {
+  margin-bottom: 12px;
+}
+
+.about-identity {
+  margin-bottom: 30px;
+}
+
+.about-name,
+.about-greeting {
+  margin: 0;
+  color: var(--accent);
+  font-family: "EB Garamond", "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 18px;
+}
+
+.about-name span[aria-hidden="true"] {
+  margin-inline: 2px;
   color: var(--muted);
-  font-size: 30px;
-  line-height: 38px;
+}
+
+.about-lede {
+  margin: 0 0 47px;
+  color: var(--muted);
+  font-size: 27px;
+  line-height: 34px;
 }
 
 .about-section {
@@ -441,8 +462,13 @@ h5 {
   }
 
   .about-lede {
-    font-size: 26px;
-    line-height: 32px;
+    font-size: 23px;
+    line-height: 29px;
+  }
+
+  .about-name,
+  .about-greeting {
+    font-size: 17px;
   }
 
   .home-copy,
