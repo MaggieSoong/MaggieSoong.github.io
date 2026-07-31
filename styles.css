@@ -283,6 +283,72 @@ h5 {
   margin-bottom: 18px;
 }
 
+.outside-section {
+  width: 100%;
+}
+
+.outside-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.outside-item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.outside-item h3 {
+  min-height: 44px;
+  margin-bottom: 12px;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.outside-item p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.outside-photo-slot,
+.outside-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-top: auto;
+  border-radius: 12px;
+}
+
+.outside-photo-slot {
+  display: grid;
+  place-items: center;
+  border: 1px dashed #bbb;
+  background: rgba(255, 255, 255, 0.32);
+  color: #999;
+  font-size: 13px;
+}
+
+.outside-photo {
+  display: block;
+  object-fit: cover;
+}
+
+.photo-photography {
+  object-position: 50% 62%;
+}
+
+.photo-culture {
+  object-position: 50% 68%;
+}
+
+.photo-languages {
+  object-position: 64% 50%;
+}
+
+.photo-travel {
+  object-position: 50% 52%;
+}
+
 .about-page-title {
   margin-bottom: 12px;
 }
@@ -404,6 +470,12 @@ h5 {
   text-decoration: none;
 }
 
+@media (max-width: 900px) {
+  .outside-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   body {
     font-size: 17px;
@@ -520,6 +592,20 @@ h5 {
 
   .attention-section h3 {
     font-size: 18px;
+  }
+
+  .outside-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .outside-item h3 {
+    min-height: 0;
+  }
+
+  .outside-photo-slot,
+  .outside-photo {
+    margin-top: 10px;
   }
 
   .experience-item {
